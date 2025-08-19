@@ -192,20 +192,16 @@ struct HomeScreen: View {
             Text(title)
                 .font(.custom("PlayfairDisplay-Bold", size: 24))
                 .padding(.horizontal)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(0 ..< itemCount) { index in
-                        NavigationLink(
-                            destination: DetailScreen(), // Corrected `destination` spelling
-                            label: {
-                                ProductCardView(image: Image("\(prefix)_\(index + 1)"), size: 210)
-                            }
-                        )
+            CarouselView(itemCount: itemCount) { index in
+                NavigationLink(
+                    destination: DetailScreen(),
+                    label: {
+                        ProductCardView(image: Image("\(prefix)_\(index + 1)"), size: 210)
                     }
-                }
-                .padding(.horizontal)
+                )
             }
+            .frame(height: 340)
+            .padding(.horizontal)
         }
     }
     
@@ -213,6 +209,25 @@ struct HomeScreen: View {
     struct HomeScreen_Previews: PreviewProvider {
         static var previews: some View {
             HomeScreen()
+        }
+    }
+}
+
+// MARK: - Reusable Carousel
+extension HomeScreen {
+    struct CarouselView<Content: View>: View {
+        let itemCount: Int
+        let content: (Int) -> Content
+
+        var body: some View {
+            TabView {
+                ForEach(0 ..< itemCount, id: \.self) { index in
+                    content(index)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
+                }
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
         }
     }
 }
