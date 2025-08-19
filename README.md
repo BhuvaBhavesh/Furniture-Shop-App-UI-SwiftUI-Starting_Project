@@ -9,3 +9,7 @@ On the Details page of our furniture shop has full info of that product also add
 ### Furniture Shop App Final UI
 
 ![App UI](/ui.png)
+
+### Documentation
+
+- Full API and component reference: [docs/API.md](docs/API.md)
