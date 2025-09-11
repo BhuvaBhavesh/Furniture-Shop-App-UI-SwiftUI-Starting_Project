@@ -193,19 +193,19 @@ struct HomeScreen: View {
                 .font(.custom("PlayfairDisplay-Bold", size: 24))
                 .padding(.horizontal)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(0 ..< itemCount) { index in
-                        NavigationLink(
-                            destination: DetailScreen(), // Corrected `destination` spelling
-                            label: {
-                                ProductCardView(image: Image("\(prefix)_\(index + 1)"), size: 210)
-                            }
-                        )
-                    }
+            TabView {
+                ForEach(0 ..< itemCount) { index in
+                    NavigationLink(
+                        destination: DetailScreen(), // Corrected `destination` spelling
+                        label: {
+                            ProductCardView(image: Image("\(prefix)_\(index + 1)"), size: 210)
+                        }
+                    )
                 }
-                .padding(.horizontal)
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .frame(height: 350)
+            .padding(.horizontal)
         }
     }
     
